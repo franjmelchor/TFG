@@ -1,0 +1,1 @@
+dv_historial_contratos_190411.loc[(dv_historial_contratos_190411.duracion_contrato_dias == 0),'duracion_contrato_dias'] = 1;
