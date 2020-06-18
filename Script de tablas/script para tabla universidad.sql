@@ -33,3 +33,10 @@ update students_190401_filtrado_personas p set fnac = (select fnac
 alter table dv_uex_190401_filtrado_personas add column total smallint;
 update dv_uex_190401_filtrado_personas set total = 1;
 delete from dv_uex_190401_filtrado_personas where edad_fin < 20;
+ALTER TABLE dv_uex_190401_filtrado_personas
+add column rama_acad text;
+
+update dv_uex_190401_filtrado_personas u
+set rama_acad = (SELECT rama_acad
+				from dv_uex_190401_titulacion_rama
+				where titulacion = u.titulacion);

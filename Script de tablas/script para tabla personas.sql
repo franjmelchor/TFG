@@ -117,5 +117,39 @@ set tipo_erasmus = (SELECT tipo_movilidad
 				   limit 1);
 				   
 update "dv_personas_190411_con_Estudios"
-set tipo_erasmus = 'Ninguno' where tipo_erasmus is null;															 
+set tipo_erasmus = 'Ninguno' where tipo_erasmus is null;	
+
+
+ALTER TABLE "dv_personas_190411_con_Estudios" 
+add column rama_acad text;
+
+ALTER TABLE "dv_personas_190411_con_Estudios" 
+add column master BOOLEAN;
+
+ALTER TABLE "dv_personas_190411_con_Estudios" 
+add column doctorado BOOLEAN;
+
+update "dv_personas_190411_con_Estudios" p 
+set rama_acad = (SELECT rama_acad
+				   FROM dv_uex_190401_filtrado_personas
+				   WHERE dni = p.dni
+				   limit 1);
+				  
+update "dv_personas_190411_con_Estudios" 
+set doctorado = false;
+
+update "dv_personas_190411_con_Estudios" 
+set master = false;
+
+update "dv_personas_190411_con_Estudios" 
+set master = true
+where dni in (select dni
+			 from dv_uex_190401_filtrado_personas
+			 where tipo_studio = 'Máster Universitario');
+			 
+update "dv_personas_190411_con_Estudios" 
+set doctorado = true
+where dni in (select dni
+			 from dv_uex_190401_filtrado_personas
+			 where tipo_studio = 'Doctorado');														 
 															 
